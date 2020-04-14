@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: "pg",
     connection: {
-      database: "clucker",
+      database: "cluckr",
     },
     migrations: {
       tableName: "knex_migrations",
