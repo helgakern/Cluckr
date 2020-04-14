@@ -1,16 +1,10 @@
-const kenx = require("./client");
+const knex = require("./client");
 
 module.exports = {
   getAll() {
-    return kenx("clucks").select("*").orderBy("createdAt", "desc");
+    return knex("clucks").select("*").orderBy("createdAt", "desc");
   },
-  getOne() {
-    return kenx("clucks").where("id", id).first();
-  },
-  create(cluck) {
-    return kenx("clucks").insert(cluck, "*");
-  },
-  update(id, cluck) {
-    return kenx("clucks").where("id, id").update(cluck, "*");
+  add(cluck) {
+    return knex("clucks").insert(cluck, "*");
   },
 };

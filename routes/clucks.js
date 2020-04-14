@@ -1,41 +1,28 @@
 const express = require("express");
 const router = express.Router();
-
+const utils = require("../utils");
 const queries = require("../db/queries");
 
-router.get("/", (req, res, next) => {
-  console.log("This is Clucks Route");
-  next();
+router.get("/", (req, res) => {
+  queries.getAll().then((clucks) => {
+    res.render("index", { clucks, utils });
+  });
 });
 
 router.get("/new", (req, res) => {
-  if (!res.locals.username) {
-    res.redirect("/users/login");
-  } else {
-    res.render("clucks/new");
-  }
+  res.render("new");
 });
 
-router.post("/new", (req, res) => {
-  req.body.username = res.locals.username;
-  if (!res.locals.username) {
-    res.redirect("/users/login");
-  } else {
-    queries.create(req.body).then((cluck) => {
-      console.log("Cluck submitted. Cluck returned: ", typeof cluck, cluck[0]);
-      res.redirect("/clucks");
+router.post("/", (req, res) => {
+  queries
+    .add({
+      username: req.cookies.username,
+      content: req.body.content,
+      imageUrl: req.body.imageUrl,
+    })
+    .then((cluck) => {
+      res.redirect("/");
     });
-  }
-});
-
-router.get("/", (req, res) => {
-  console.log("This is Index Route");
-  queries.getAll().then((clucks) => {
-    console.log("All clucks:" + typeof clucks);
-    res.render("clucks/index", {
-      clucks: clucks,
-    });
-  });
 });
 
 module.exports = router;

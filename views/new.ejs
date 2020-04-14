@@ -1,0 +1,36 @@
+<%- include('./partials/header') %>
+
+<!-- Form to add new cluck -->
+<div class="main-container">
+  <form method="POST" action="/clucks">
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea
+        class="form-control"
+        id="content"
+        rows="3"
+        name="content"
+        placeholder="Whatchoo cluckin' bout?"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input
+        type="url"
+        class="form-control"
+        name="imageUrl"
+        id="imageUrl"
+        placeholder="https://www.yourimage.com/image.png"
+      />
+    </div>
+
+    <input
+      type="submit"
+      class="btn btn-outline-secondary btn-lg float-right"
+      value="Cluck!"
+    />
+  </form>
+</div>
+
+<%- include('./partials/footer') %>

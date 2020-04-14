@@ -6,9 +6,9 @@ module.exports = {
     connection: {
       database: "cluckr",
     },
-    migrations: {
-      tableName: "knex_migrations",
-      directory: "./db/migrations",
-    },
+  },
+  migrations: {
+    tableName: "migrations",
+    directory: "./db/migrations",
   },
 };

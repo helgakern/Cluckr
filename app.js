@@ -1,49 +1,37 @@
 const express = require("express");
-const app = express();
-const logger = require("morgan");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const methodOverride = require("method-override");
+const logger = require("morgan");
+const app = express();
 
-//Import routes:
+// Routes:
+const indexRouter = require("./routes/index");
+const clucksRouter = require("./routes/clucks");
 
-// Setup view engine:
+// View engine setup:
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.set("views", "views");
 
-// Use middleware:
 app.use(logger("dev"));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use(
-  methodOverride((req, res) => {
-    if (req.body && req.body._method) {
-      const method = req.body._method;
-      delete req.body._method;
-      return method;
-    }
-  })
-);
-
-//Routes:
-app.use("/", indexRouter);
-app.use("/user", userRouter);
-app.use("/clucks", clucksRouter);
-
-// Cookies:
-app.use(function (req, res, next) {
-  const cookie = req.cookie.cluckr || {};
-  const username = cookie.username;
-  res.locals.username = username;
+app.use((req, res, next) => {
+  const username = req.cookies.username;
+  res.locals.signInUser = username || "";
   next();
 });
 
+// Route Middleware:
+app.use("/", indexRouter);
+app.use("/clucks", clucksRouter);
+
 const DOMAIN = "localhost";
-const PORT = "3000";
+const PORT = 3000;
 app.listen(PORT, DOMAIN, () => {
-  console.log(`Listening at http://${DOMAIN}:${PORT}`);
+  console.log(
+    `Listening at http://${DOMAIN}:${PORT}`
+  );
 });
 
 module.exports = app;
