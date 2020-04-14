@@ -1,7 +1,7 @@
 const express = require("express");
 const route = express.Router();
 
-router.get("/", function (req, res, next) {
+router.get("/", (req, res) => {
   res.render("index", { title: "Cluckr" });
 });
 
