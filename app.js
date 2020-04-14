@@ -9,6 +9,7 @@ const methodOverride = require("method-override");
 
 // Setup view engine:
 app.set("view engine", "ejs");
+app.set("views", "views");
 
 // Use middleware:
 app.use(logger("dev"));
@@ -26,8 +27,23 @@ app.use(
   })
 );
 
+//Routes:
+app.use("/", indexRouter);
+app.use("/user", userRouter);
+app.use("/clucks", clucksRouter);
+
+// Cookies:
+app.use(function (req, res, next) {
+  const cookie = req.cookie.cluckr || {};
+  const username = cookie.username;
+  res.locals.username = username;
+  next();
+});
+
 const DOMAIN = "localhost";
 const PORT = "3000";
 app.listen(PORT, DOMAIN, () => {
   console.log(`Listening at http://${DOMAIN}:${PORT}`);
 });
+
+module.exports = app;
