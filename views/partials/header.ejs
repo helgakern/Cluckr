@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cluckr</title>
+    <link rel='icon' href='images/chicken.png' type='image/x-icon'/ >
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+  </head>
+
+  <ul class="nav justify-content-center m-3">
+    <a class="navbar-brand" href="/">
+      <img src="/images/chicken.png" width="50" height="50" alt="Cluckr logo" />
+    </a>
+    <li class="nav-item ml-auto justify-content-end m-1">
+      <% if (signInUser && signInUser !== 'undefined') { %>
+
+      <a class="btn btn-secondary" href="/clucks/new" role="button">Cluck!</a>
+    </li>
+    <li class="nav-item m-1">
+      <div class="nav-item nav-link"><%= signInUser %></div>
+    </li>
+
+    <li class="nav-item m-1">
+      <form action="/sign_out" method="POST">
+        <input class="btn btn-secondary" type="submit" value="Sign Out" />
+      </form>
+    </li>
+    <% } else { %>
+    <li class="nav-item mt-3 mr-3">
+      <em
+        >Welcome! 🐔 Post your Cluckr today, but first let us know who
+        you are</em
+      >
+    </li>
+    <li class="nav-item m-1">
+      <a class="btn btn-secondary" href="/sign_in" role="button">Sign In</a>
+    </li>
+    <% } %>
+  </ul>
+  <div>&nbsp;</div>
+
+  <div class="container">
